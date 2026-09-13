@@ -21,5 +21,6 @@ delete process.env.PUSHER_APP_ID
 delete process.env.PUSHER_SECRET
 delete process.env.NEXT_PUBLIC_PUSHER_KEY
 delete process.env.NEXT_PUBLIC_PUSHER_CLUSTER
-// No Redis in tests: the rate limiter falls back to its in-process store.
-delete process.env.REDIS_URL
+// No Redis in tests: the rate limiter counts in-process unless a test opts in.
+delete process.env.UPSTASH_REDIS_REST_URL
+delete process.env.UPSTASH_REDIS_REST_TOKEN

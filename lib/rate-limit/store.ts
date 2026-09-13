@@ -16,9 +16,9 @@ export interface RateLimitStore {
  * Sliding-window log held in this process.
  *
  * Correct for a single server — which is what `npm start` runs. With several
- * instances behind a load balancer each keeps its own counts, so the effective
- * limit multiplies by the instance count; point REDIS_URL at a shared Redis to
- * make the limit global.
+ * instances each keeps its own counts, so the effective limit multiplies by the
+ * instance count. Serverless hosting runs many short-lived instances, so set
+ * UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN to share one count.
  */
 export class MemoryRateLimitStore implements RateLimitStore {
   readonly name = 'memory'

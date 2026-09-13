@@ -1,5 +1,5 @@
 import { MemoryRateLimitStore, type RateLimitStore } from '@/lib/rate-limit/store'
-import { RedisRateLimitStore } from '@/lib/rate-limit/redis-store'
+import { UpstashRateLimitStore } from '@/lib/rate-limit/upstash-store'
 
 export interface RateLimitRule {
   /** Requests permitted per window. */
@@ -37,9 +37,11 @@ export const RATE_LIMITS = {
 } as const satisfies Record<string, RateLimitRule>
 
 interface RateLimitState {
-  memory:           MemoryRateLimitStore
-  redis:            RedisRateLimitStore | null
-  redisUnavailable: boolean
+  memory: MemoryRateLimitStore
+  /** The shared store: undefined until first looked up, null when unconfigured. */
+  shared?: RateLimitStore | null
+  /** Skip the shared store until this time (epoch ms) after it has failed. */
+  sharedDownUntil?: number
 }
 
 declare global {
@@ -53,26 +55,52 @@ declare global {
  * on every request is not a rate limit at all.
  */
 const state: RateLimitState = global.rateLimitState ?? {
-  memory:           new MemoryRateLimitStore(),
-  redis:            null,
-  redisUnavailable: false,
+  memory: new MemoryRateLimitStore(),
 }
 global.rateLimitState = state
 
-function getStores(): RateLimitStore[] {
-  const url = process.env.REDIS_URL
-  if (!url || state.redisUnavailable) return [state.memory]
+/**
+ * How long to count in-process after the shared store fails before trying it
+ * again. It used to be switched off for good on the first error, so one slow
+ * cold start quietly turned a global limit back into a per-instance one.
+ */
+export const SHARED_RETRY_AFTER_MS = 30_000
 
-  if (!state.redis) state.redis = RedisRateLimitStore.connect(url)
-  return [state.redis, state.memory]
+/** A limiter that makes sign-in wait on a slow network call is worse than none. */
+export const SHARED_TIMEOUT_MS = 1_500
+
+function getStores(): RateLimitStore[] {
+  if (state.shared === undefined) state.shared = UpstashRateLimitStore.fromEnv()
+
+  const resting = Date.now() < (state.sharedDownUntil ?? 0)
+  if (!state.shared || resting) return [state.memory]
+
+  return [state.shared, state.memory]
+}
+
+/**
+ * Replace the shared store, or pass null to count in-process only. Tests use it
+ * to exercise the fallback without a real Redis.
+ */
+export function setSharedRateLimitStore(store: RateLimitStore | null): void {
+  state.shared = store
+  state.sharedDownUntil = 0
+}
+
+function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined
+  const timeout = new Promise<never>((_, reject) => {
+    timer = setTimeout(() => reject(new Error(`timed out after ${ms}ms`)), ms)
+  })
+  return Promise.race([promise, timeout]).finally(() => clearTimeout(timer))
 }
 
 /**
  * Count a request against `key` and decide whether it may proceed.
  *
  * Deliberately fails *closed on the rule, open on the infrastructure*: if the
- * shared store is unreachable the in-process store still applies the limit, so
- * losing Redis degrades accuracy rather than removing protection.
+ * shared store is unreachable or slow, the in-process store still applies the
+ * limit, so losing Redis degrades accuracy rather than removing protection.
  */
 export async function rateLimit(
   key: string,
@@ -82,17 +110,20 @@ export async function rateLimit(
 
   let hit
   try {
-    hit = await primary.hit(key, rule.windowMs, rule.limit)
+    hit = primary === state.memory
+      ? await primary.hit(key, rule.windowMs, rule.limit)
+      : await withTimeout(primary.hit(key, rule.windowMs, rule.limit), SHARED_TIMEOUT_MS)
   } catch (err) {
-    if (primary.name === 'redis') {
-      if (!state.redisUnavailable) {
-        console.warn(
-          '[rate-limit] Redis unreachable, falling back to in-process counting:',
-          err instanceof Error ? err.message : err
-        )
-      }
-      state.redisUnavailable = true
+    if (primary === state.memory) throw err
+
+    // Warn once per outage rather than on every request during it.
+    if (Date.now() >= (state.sharedDownUntil ?? 0)) {
+      console.warn(
+        `[rate-limit] ${primary.name} unavailable, counting in-process for ${SHARED_RETRY_AFTER_MS / 1000}s:`,
+        err instanceof Error ? err.message : err
+      )
     }
+    state.sharedDownUntil = Date.now() + SHARED_RETRY_AFTER_MS
     hit = await (fallback ?? state.memory).hit(key, rule.windowMs, rule.limit)
   }
 
@@ -108,11 +139,19 @@ export async function rateLimit(
 }
 
 /**
- * Best-effort client address. Behind a proxy this is only as trustworthy as the
- * proxy: x-forwarded-for is caller-supplied unless something upstream rewrites
- * it, so treat these limits as friction, not as identity.
+ * Best-effort client address.
+ *
+ * On Netlify, x-nf-client-connection-ip is set by the platform from the actual
+ * connection, and a caller cannot supply it. x-forwarded-for can carry entries
+ * the caller wrote, so reading its first entry first let anyone send a new fake
+ * address with every request and never meet a per-IP limit. The remaining
+ * headers cover other proxies and local runs; treat all of them as friction,
+ * not identity.
  */
 export function clientIp(req: Request): string {
+  const netlify = req.headers.get('x-nf-client-connection-ip')?.trim()
+  if (netlify) return netlify
+
   const forwarded = req.headers.get('x-forwarded-for')
   if (forwarded) {
     const first = forwarded.split(',')[0]?.trim()
