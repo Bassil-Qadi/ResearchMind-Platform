@@ -34,5 +34,15 @@ export async function connectDB(): Promise<typeof mongoose> {
   }
 
   cached.conn = await cached.promise;
+
+  // A URI without a database path silently lands in MongoDB's default "test"
+  // database, which is where production data sat until it was moved.
+  const dbName = cached.conn.connection.db?.databaseName;
+  if (dbName === "test" && process.env.NODE_ENV === "production") {
+    console.warn(
+      '[db] connected to the default "test" database; add the database name to MONGODB_URI (…mongodb.net/research-platform?…)'
+    );
+  }
+
   return cached.conn;
 }
