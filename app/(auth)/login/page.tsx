@@ -8,7 +8,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 import Link from "next/link";
 
-import { BookOpen, Loader2, Sparkles } from "lucide-react";
+import { Loader2 } from "lucide-react";
+
+import { AuthShell } from "@/components/auth/auth-shell";
 
 import { Button } from "@/components/ui/button";
 
@@ -18,22 +20,13 @@ import { Label } from "@/components/ui/label";
 
 import { Skeleton } from "@/components/ui/skeleton";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-
-import { ThemeToggle } from "@/components/layout/theme-toggle";
+import { CardContent, CardFooter } from "@/components/ui/card";
 
 import {
   AUTH_ERROR_MESSAGES,
   DEFAULT_AUTH_ERROR_MESSAGE,
 } from "@/lib/auth/errors";
-import { EMAIL_PLACEHOLDER, PLATFORM, UNIVERSITY, UNIVERSITY_LOCATION } from "@/lib/brand";
+import { EMAIL_PLACEHOLDER, UNIVERSITY } from "@/lib/brand";
 
 function LoginForm() {
   const router = useRouter();
@@ -179,105 +172,25 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <div className="flex min-h-screen">
-      {/* Brand panel — desktop only */}
+    <AuthShell
+      title="Welcome back"
+      description={`Sign in with your ${UNIVERSITY.name} credentials to access your research workspace.`}
+      heroHeading={`Your ${UNIVERSITY.short} research workspace`}
+      heroBody="Sign in to discover projects, connect with researchers, and collaborate across faculties — all in one secure platform."
+    >
+      <Suspense
+        fallback={
+          <CardContent className="space-y-4">
+            <Skeleton className="h-11 w-full" />
 
-      <div className="relative hidden w-1/2 flex-col justify-between overflow-hidden p-10 text-white lg:flex">
-        <div className="absolute inset-0 bg-gradient-to-br from-green-700 via-emerald-800 to-teal-900 animate-gradient" />
+            <Skeleton className="h-11 w-full" />
 
-        <div
-          className="mesh-bg-animated absolute inset-0 opacity-40"
-          aria-hidden
-        />
-
-        <div
-          className="pointer-events-none absolute -left-20 top-1/4 h-80 w-80 rounded-full bg-green-500/30 blur-3xl animate-float-slow"
-          aria-hidden
-        />
-
-        <div
-          className="pointer-events-none absolute -right-10 bottom-1/4 h-64 w-64 rounded-full bg-teal-400/25 blur-3xl animate-float"
-          aria-hidden
-        />
-
-        <Link href="/" className="relative flex items-center gap-2.5">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/15 backdrop-blur-sm">
-            <BookOpen className="h-5 w-5" aria-hidden />
-          </div>
-
-          <span className="flex flex-col leading-tight">
-            <span className="font-display text-lg font-bold">{UNIVERSITY.name}</span>
-            <span lang="ar" dir="rtl" className="text-xs text-white/70">{UNIVERSITY.nameArabic}</span>
-          </span>
-        </Link>
-
-        <div className="relative space-y-6">
-          <div className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-sm backdrop-blur-sm">
-            <Sparkles className="h-3.5 w-3.5" aria-hidden />
-            Built for {UNIVERSITY.name} research teams
-          </div>
-
-          <h2 className="font-display text-4xl font-bold leading-tight tracking-tight">
-            Your {UNIVERSITY.short} research workspace
-          </h2>
-
-          <p className="max-w-md text-lg leading-relaxed text-white/80">
-            Sign in to discover projects, connect with researchers, and
-            collaborate across faculties — all in one secure platform.
-          </p>
-        </div>
-
-        <p className="relative text-sm text-white/50">
-          © {PLATFORM.name} · {UNIVERSITY_LOCATION}
-        </p>
-      </div>
-
-      {/* Form panel */}
-
-      <div className="relative flex flex-1 flex-col items-center justify-center bg-muted/30 p-4">
-        <div className="mesh-bg absolute inset-0 opacity-60" aria-hidden />
-
-        <div className="absolute right-4 top-4 z-10">
-          <ThemeToggle />
-        </div>
-
-        <Card className="relative z-10 w-full max-w-md animate-fade-up border-border/60 shadow-elevated backdrop-blur-sm">
-          <CardHeader className="space-y-1 pb-2">
-            <div className="mb-2 flex items-center gap-2 lg:hidden">
-              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-green-600 to-teal-600 text-white">
-                <BookOpen className="h-4 w-4" aria-hidden />
-              </div>
-
-              <span className="font-display font-semibold">
-                {UNIVERSITY.name}
-              </span>
-            </div>
-
-            <CardTitle className="font-display text-2xl">
-              Welcome back
-            </CardTitle>
-
-            <CardDescription>
-              Sign in with your {UNIVERSITY.name} credentials to access your
-              research workspace.
-            </CardDescription>
-          </CardHeader>
-
-          <Suspense
-            fallback={
-              <CardContent className="space-y-4">
-                <Skeleton className="h-11 w-full" />
-
-                <Skeleton className="h-11 w-full" />
-
-                <Skeleton className="h-11 w-full" />
-              </CardContent>
-            }
-          >
-            <LoginForm />
-          </Suspense>
-        </Card>
-      </div>
-    </div>
+            <Skeleton className="h-11 w-full" />
+          </CardContent>
+        }
+      >
+        <LoginForm />
+      </Suspense>
+    </AuthShell>
   );
 }

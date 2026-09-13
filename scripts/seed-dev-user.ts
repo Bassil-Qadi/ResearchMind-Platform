@@ -12,12 +12,18 @@ import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import { connectDB } from "@/lib/db/connect";
 import { User } from "@/lib/db/models/user";
+import type { Department } from "@/lib/departments";
 
 // connectDB and the User model both read env lazily, so loading .env.local at
 // module scope is early enough.
 loadEnvConfig(process.cwd());
 
 const BCRYPT_ROUNDS = 12;
+
+// Typed against Yarmouk's faculty list, so a value that is not on it (this was
+// once "Computer Science") fails the type check instead of reaching the database.
+// Matches the demo account already stored.
+const DEMO_DEPARTMENT: Department = "Hijjawi Faculty for Engineering Technology";
 
 async function main() {
   if (process.env.NODE_ENV === "production") {
@@ -44,7 +50,7 @@ async function main() {
         email,
         universityId: "DEV-001",
         name: "Demo Researcher",
-        department: "Computer Science",
+        department: DEMO_DEPARTMENT,
         position: "Professor",
         researchInterests: ["collaboration", "open science"],
       },

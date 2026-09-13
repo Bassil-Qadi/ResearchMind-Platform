@@ -7,19 +7,19 @@ import {
 } from '@/components/ui/card'
 
 /**
- * The split-screen the signed-out pages share: Yarmouk's panel on the left,
- * a card on the right.
- *
- * Login and register still carry their own copy of this markup. New pages use
- * this one rather than adding a third and fourth.
+ * The split-screen every signed-out page shares: Yarmouk's panel on the left,
+ * a card on the right. Login, register, forgot-password and reset-password all
+ * render through this, so a brand change is made here once.
  */
 export function AuthShell({
-  title, description, heroHeading, heroBody, children,
+  title, description, heroHeading, heroBody, heroExtra, children,
 }: {
   title:        string
   description:  string
   heroHeading:  string
   heroBody:     string
+  /** Anything the brand panel shows under the body, such as register's list of benefits. */
+  heroExtra?:   React.ReactNode
   children:     React.ReactNode
 }) {
   return (
@@ -56,6 +56,7 @@ export function AuthShell({
             {heroHeading}
           </h2>
           <p className="max-w-md text-lg leading-relaxed text-white/80">{heroBody}</p>
+          {heroExtra}
         </div>
 
         <p className="relative text-sm text-white/50">
