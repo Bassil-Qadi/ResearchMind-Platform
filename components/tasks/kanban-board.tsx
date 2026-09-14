@@ -270,8 +270,10 @@ function CreateTaskDialog({
         </DialogHeader>
         <div className="space-y-3 pt-2">
           <div className="space-y-1.5">
-            <Label>Title</Label>
+            {/* "new-task-" ids keep these apart from the edit form's "task-" ones. */}
+            <Label htmlFor="new-task-title">Title</Label>
             <Input
+              id="new-task-title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Task title…"
@@ -279,11 +281,12 @@ function CreateTaskDialog({
             />
           </div>
           <div className="space-y-1.5">
-            <Label>
+            <Label htmlFor="new-task-description">
               Description{" "}
               <span className="text-muted-foreground">(optional)</span>
             </Label>
             <Textarea
+              id="new-task-description"
               value={desc}
               onChange={(e) => setDesc(e.target.value)}
               placeholder="Add more detail…"
@@ -293,12 +296,12 @@ function CreateTaskDialog({
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1.5">
-              <Label>Status</Label>
+              <Label htmlFor="new-task-status">Status</Label>
               <Select
                 value={status}
                 onValueChange={(v) => setStatus(v as TaskStatus)}
               >
-                <SelectTrigger className="rounded-xl">
+                <SelectTrigger id="new-task-status" className="rounded-xl">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -311,12 +314,12 @@ function CreateTaskDialog({
               </Select>
             </div>
             <div className="space-y-1.5">
-              <Label>Priority</Label>
+              <Label htmlFor="new-task-priority">Priority</Label>
               <Select
                 value={priority}
                 onValueChange={(v) => setPriority(v as TaskPriority)}
               >
-                <SelectTrigger className="rounded-xl">
+                <SelectTrigger id="new-task-priority" className="rounded-xl">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -329,12 +332,12 @@ function CreateTaskDialog({
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1.5">
-              <Label>
+              <Label htmlFor="new-task-assignee">
                 Assignee{" "}
                 <span className="text-muted-foreground">(optional)</span>
               </Label>
               <Select value={assignee} onValueChange={setAssignee}>
-                <SelectTrigger className="rounded-xl">
+                <SelectTrigger id="new-task-assignee" className="rounded-xl">
                   <SelectValue placeholder="Unassigned" />
                 </SelectTrigger>
                 <SelectContent>
@@ -348,11 +351,12 @@ function CreateTaskDialog({
               </Select>
             </div>
             <div className="space-y-1.5">
-              <Label>
+              <Label htmlFor="new-task-due">
                 Due date{" "}
                 <span className="text-muted-foreground">(optional)</span>
               </Label>
               <Input
+                id="new-task-due"
                 type="date"
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}

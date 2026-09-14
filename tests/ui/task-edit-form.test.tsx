@@ -40,6 +40,14 @@ describe('TaskEditForm', () => {
     expect(screen.getByLabelText('Due date')).toHaveValue('2026-10-01')
   })
 
+  it('names each select after its label, for screen readers', () => {
+    renderForm()
+
+    expect(screen.getByRole('combobox', { name: 'Column' })).toHaveTextContent('To Do')
+    expect(screen.getByRole('combobox', { name: 'Priority' })).toHaveTextContent('medium')
+    expect(screen.getByRole('combobox', { name: 'Assignee' })).toHaveTextContent('Lina Haddad')
+  })
+
   it('closes without a request when nothing changed', async () => {
     const fetchMock = mockFetch(() => jsonResponse({}))
     const { onDone } = renderForm()

@@ -72,9 +72,9 @@ export function RequestToJoinDialog({ projectId, openPositions }: RequestToJoinD
 
           {openPositions.length > 0 && (
             <div className="space-y-1.5">
-              <Label>Position <span className="text-muted-foreground">(optional)</span></Label>
+              <Label htmlFor="join-position">Position <span className="text-muted-foreground">(optional)</span></Label>
               <Select value={position} onValueChange={setPosition}>
-                <SelectTrigger className="rounded-xl">
+                <SelectTrigger id="join-position" className="rounded-xl">
                   <SelectValue placeholder="Which position are you interested in?" />
                 </SelectTrigger>
                 <SelectContent>

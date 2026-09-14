@@ -94,9 +94,9 @@ export function CreateProjectDialog() {
 
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1.5">
-              <Label>Status</Label>
+              <Label htmlFor="project-status">Status</Label>
               <Select defaultValue="active" onValueChange={(v) => setValue('status', v as CreateProjectInput['status'])}>
-                <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
+                <SelectTrigger id="project-status" className="rounded-xl"><SelectValue /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="active">Active</SelectItem>
                   <SelectItem value="seeking">Seeking members</SelectItem>
@@ -106,9 +106,9 @@ export function CreateProjectDialog() {
               </Select>
             </div>
             <div className="space-y-1.5">
-              <Label>Visibility</Label>
+              <Label htmlFor="project-visibility">Visibility</Label>
               <Select defaultValue="university" onValueChange={(v) => setValue('visibility', v as CreateProjectInput['visibility'])}>
-                <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
+                <SelectTrigger id="project-visibility" className="rounded-xl"><SelectValue /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="public">Public</SelectItem>
                   <SelectItem value="university">University only</SelectItem>

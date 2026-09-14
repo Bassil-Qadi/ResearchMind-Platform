@@ -82,7 +82,8 @@ function UserRow({ user, isSelf }: { user: AdminUser; isSelf: boolean }) {
                 apply({ role: v as UserRole }, `Change ${user.name}'s role to ${v}?`)
               }
             >
-              <SelectTrigger className="h-8 w-32 rounded-lg text-xs">
+              {/* No visible label, and every row has one, so name it per user. */}
+              <SelectTrigger aria-label={`Role for ${user.name}`} className="h-8 w-32 rounded-lg text-xs">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>

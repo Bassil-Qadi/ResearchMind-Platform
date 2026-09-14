@@ -89,9 +89,9 @@ export function InviteMemberDialog({ projectId }: { projectId: string }) {
           </div>
 
           <div className="space-y-1.5">
-            <Label>Role</Label>
+            <Label htmlFor="invite-role">Role</Label>
             <Select defaultValue="contributor" onValueChange={(v) => setValue('role', v as InviteMemberInput['role'])}>
-              <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
+              <SelectTrigger id="invite-role" className="rounded-xl"><SelectValue /></SelectTrigger>
               <SelectContent>
                 <SelectItem value="co-pi">Co-PI</SelectItem>
                 <SelectItem value="contributor">Contributor</SelectItem>

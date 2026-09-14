@@ -74,7 +74,8 @@ describe('JoinRequestsPanel', () => {
     const user = userEvent.setup()
     renderWithClient(<JoinRequestsPanel projectId="p1" canReview />)
 
-    await user.click(await screen.findByRole('combobox'))
+    // Named per applicant, so a screen reader can tell one row's role from the next.
+    await user.click(await screen.findByRole('combobox', { name: 'Role for Sami Khalil' }))
     await user.click(await screen.findByRole('option', { name: 'Co-PI' }))
     await user.click(screen.getByRole('button', { name: 'Approve' }))
 
@@ -124,7 +125,8 @@ describe('RequestToJoinDialog', () => {
     await user.click(screen.getByRole('button', { name: 'Request to join' }))
     const dialog = await screen.findByRole('dialog')
 
-    expect(within(dialog).getByText(/which position are you interested in/i)).toBeInTheDocument()
+    expect(within(dialog).getByRole('combobox', { name: /position/i }))
+      .toHaveTextContent(/which position are you interested in/i)
   })
 
   it('stays open with the reason when the request is refused', async () => {

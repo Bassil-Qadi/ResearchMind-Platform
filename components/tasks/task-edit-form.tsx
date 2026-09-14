@@ -147,9 +147,9 @@ export function TaskEditForm({
 
       <div className="grid gap-3 sm:grid-cols-2">
         <div className="space-y-1.5">
-          <Label>Column</Label>
+          <Label htmlFor="task-status">Column</Label>
           <Select value={form.status} onValueChange={(v) => set('status', v as ITask['status'])}>
-            <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
+            <SelectTrigger id="task-status" className="rounded-xl"><SelectValue /></SelectTrigger>
             <SelectContent>
               {COLUMNS.map((c) => (
                 <SelectItem key={c.id} value={c.id}>{c.label}</SelectItem>
@@ -159,9 +159,9 @@ export function TaskEditForm({
         </div>
 
         <div className="space-y-1.5">
-          <Label>Priority</Label>
+          <Label htmlFor="task-priority">Priority</Label>
           <Select value={form.priority} onValueChange={(v) => set('priority', v as ITask['priority'])}>
-            <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
+            <SelectTrigger id="task-priority" className="rounded-xl"><SelectValue /></SelectTrigger>
             <SelectContent>
               {TASK_PRIORITIES.map((p) => (
                 <SelectItem key={p} value={p} className="capitalize">{p}</SelectItem>
@@ -173,10 +173,10 @@ export function TaskEditForm({
 
       <div className="grid gap-3 sm:grid-cols-2">
         <div className="space-y-1.5">
-          <Label>Assignee</Label>
+          <Label htmlFor="task-assignee">Assignee</Label>
           {/* Only project members: the server refuses anyone else. */}
           <Select value={form.assigneeId} onValueChange={(v) => set('assigneeId', v)}>
-            <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
+            <SelectTrigger id="task-assignee" className="rounded-xl"><SelectValue /></SelectTrigger>
             <SelectContent>
               <SelectItem value={UNASSIGNED}>Unassigned</SelectItem>
               {members.map((m) => (

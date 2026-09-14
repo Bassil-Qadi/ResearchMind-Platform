@@ -89,7 +89,12 @@ function RequestRow({
 
       <div className="flex flex-wrap items-center justify-end gap-2">
         <Select value={role} onValueChange={(v) => setRole(v as MemberRole)}>
-          <SelectTrigger className="h-8 w-40 rounded-lg text-xs">
+          {/* No visible label here, and several rows can be open at once, so
+              name each one after its applicant. */}
+          <SelectTrigger
+            aria-label={`Role for ${request.userId.name}`}
+            className="h-8 w-40 rounded-lg text-xs"
+          >
             <SelectValue />
           </SelectTrigger>
           <SelectContent>

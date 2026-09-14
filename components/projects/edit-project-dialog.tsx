@@ -216,9 +216,9 @@ export function EditProjectDialog({ project }: { project: ProjectDetail }) {
 
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="space-y-1.5">
-              <Label>Status</Label>
+              <Label htmlFor="edit-status">Status</Label>
               <Select value={form.status} onValueChange={(v) => set('status', v as Status)}>
-                <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
+                <SelectTrigger id="edit-status" className="rounded-xl"><SelectValue /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="active">Active</SelectItem>
                   <SelectItem value="seeking">Recruiting</SelectItem>
@@ -228,9 +228,9 @@ export function EditProjectDialog({ project }: { project: ProjectDetail }) {
               </Select>
             </div>
             <div className="space-y-1.5">
-              <Label>Visibility</Label>
+              <Label htmlFor="edit-visibility">Visibility</Label>
               <Select value={form.visibility} onValueChange={(v) => set('visibility', v as Visibility)}>
-                <SelectTrigger className="rounded-xl"><SelectValue /></SelectTrigger>
+                <SelectTrigger id="edit-visibility" className="rounded-xl"><SelectValue /></SelectTrigger>
                 <SelectContent>
                   <SelectItem value="public">Public</SelectItem>
                   <SelectItem value="university">University only</SelectItem>
