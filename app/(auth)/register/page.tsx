@@ -23,8 +23,10 @@ const registerSchema = z.object({
   email:      z.string().email('Invalid email address'),
   password:   z.string().min(8, 'Password must be at least 8 characters'),
   confirm:    z.string(),
-  role:       z.enum(['Student', 'Faculty', 'Staff', 'Researcher']),
-  department: z.string().min(1, 'Department is required'),
+  // The selects start out undefined, not empty, so without required_error an
+  // untouched one only said "Required".
+  role:       z.enum(['Student', 'Faculty', 'Staff', 'Researcher'], { required_error: 'Select a role' }),
+  department: z.string({ required_error: 'Department is required' }).min(1, 'Department is required'),
   position:   z.string().optional(),
 }).refine((d) => d.password === d.confirm, {
   message: 'Passwords do not match',
@@ -160,12 +162,13 @@ export default function RegisterPage() {
             )}
           </div>
 
-          {/* Role + Department */}
+          {/* Role + Department. The ids tie each label to its select, so a
+              screen reader announces "Role" rather than an unnamed list. */}
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1.5">
-              <Label>Role</Label>
-              <Select onValueChange={(v) => setValue('role', v as RegisterInput['role'])}>
-                <SelectTrigger className="h-11 rounded-xl">
+              <Label htmlFor="role">Role</Label>
+              <Select onValueChange={(v) => setValue('role', v as RegisterInput['role'], { shouldValidate: true })}>
+                <SelectTrigger id="role" className="h-11 rounded-xl">
                   <SelectValue placeholder="Select role" />
                 </SelectTrigger>
                 <SelectContent>
@@ -179,9 +182,9 @@ export default function RegisterPage() {
               )}
             </div>
             <div className="space-y-1.5">
-              <Label>Department</Label>
-              <Select onValueChange={(v) => setValue('department', v)}>
-                <SelectTrigger className="h-11 rounded-xl">
+              <Label htmlFor="department">Department</Label>
+              <Select onValueChange={(v) => setValue('department', v, { shouldValidate: true })}>
+                <SelectTrigger id="department" className="h-11 rounded-xl">
                   <SelectValue placeholder="Select dept." />
                 </SelectTrigger>
                 <SelectContent>

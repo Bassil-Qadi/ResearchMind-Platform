@@ -2,11 +2,15 @@ import { defineConfig } from 'vitest/config'
 import path from 'node:path'
 
 export default defineConfig({
+  // tsconfig keeps JSX as-is for Next.js to compile; the component tests need it compiled here.
+  esbuild: { jsx: 'automatic' },
   test: {
     environment: 'node',
+    // Component tests need a DOM. Everything else keeps running in Node.
+    environmentMatchGlobs: [['tests/ui/**', 'jsdom']],
     globals: true,
-    include: ['tests/**/*.test.ts'],
-    setupFiles: ['tests/setup.ts'],
+    include: ['tests/**/*.test.{ts,tsx}'],
+    setupFiles: ['tests/setup.ts', 'tests/setup-dom.ts'],
     // Route tests share one in-memory MongoDB, and several assert on counters
     // that live in module state, so files must not run concurrently.
     fileParallelism: false,
