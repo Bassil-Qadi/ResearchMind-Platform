@@ -4,6 +4,7 @@ import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { LogOut, Settings, User } from "lucide-react";
 import { useUser } from "@/hooks/use-user";
+import { givenName } from "@/lib/names";
 import { UserAvatar } from "@/components/ui/user-avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -35,7 +36,7 @@ export function UserNav() {
             fallbackClassName="from-green-600 to-teal-600"
           />
           <span className="hidden max-w-[120px] truncate text-sm font-medium md:inline">
-            {user?.name?.split(" ")[0] ?? "Account"}
+            {givenName(user?.name) ?? "Account"}
           </span>
         </Button>
       </DropdownMenuTrigger>

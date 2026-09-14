@@ -4,6 +4,8 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { useSession } from 'next-auth/react'
 import { Loader2, Send } from 'lucide-react'
 import { errorMessage } from '@/lib/api'
+import { givenName } from '@/lib/names'
+import { messageTime } from '@/lib/format-time'
 import {
   useDirectThread, useSendDirectMessage,
   type DirectParticipant,
@@ -15,9 +17,7 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { Skeleton } from '@/components/ui/skeleton'
 import { cn } from '@/lib/utils'
 
-function formatTime(value: string) {
-  return new Date(value).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-}
+const formatTime = (value: string) => messageTime(value)
 
 export function DirectChat({
   conversationId,
@@ -138,7 +138,7 @@ export function DirectChat({
           <Input
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            placeholder={`Message ${participant?.name?.split(' ')[0] ?? ''}…`}
+            placeholder={`Message ${givenName(participant?.name) ?? ''}…`}
             maxLength={5000}
             className="rounded-xl"
             aria-label="Message"

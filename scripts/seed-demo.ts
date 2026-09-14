@@ -14,8 +14,8 @@
  *   there, so nothing done in the demo can email a real person.
  *
  * All accounts share one password: DEMO_PASSWORD if set, otherwise a random
- * one printed at the end. Times are relative to the moment it runs, so the
- * activity always looks recent.
+ * one printed at the end. Times count back from when it runs (see demoNow),
+ * so reseed shortly before presenting and the activity looks recent.
  */
 import { loadEnvConfig } from '@next/env'
 import mongoose, { Types, type Model } from 'mongoose'
@@ -42,8 +42,27 @@ const EMAIL_DOMAIN = 'yu-demo.test'
 
 // ---------------------------------------------------------------- time helpers
 
-const NOW = Date.now()
 const MINUTE = 60_000
+
+/**
+ * The moment the demo treats as "now". Every seeded time counts back from it,
+ * by up to six hours within a day, so seeding at night put the team's chat at
+ * 3 AM. Outside a Jordanian afternoon (UTC+3 all year) it anchors to the most
+ * recent 17:30 instead.
+ */
+function demoNow(real = Date.now()): number {
+  const offset  = 3 * 60 * MINUTE
+  const local   = new Date(real + offset)
+  const minutes = local.getUTCHours() * 60 + local.getUTCMinutes()
+  if (minutes >= 14 * 60 && minutes < 18 * 60 + 30) return real
+
+  const anchor = new Date(local)
+  anchor.setUTCHours(17, 30, 0, 0)
+  if (anchor.getTime() > local.getTime()) anchor.setUTCDate(anchor.getUTCDate() - 1)
+  return anchor.getTime() - offset
+}
+
+const NOW = demoNow()
 const ago    = (days: number, hours = 0, minutes = 0) => new Date(NOW - ((days * 24 + hours) * 60 + minutes) * MINUTE)
 const inDays = (days: number) => new Date(NOW + days * 24 * 60 * MINUTE)
 

@@ -144,7 +144,7 @@ export default function ProfilePage() {
 
       {/* Tabs */}
       <Tabs defaultValue="about" className="space-y-6">
-        <TabsList className="w-full justify-start sm:w-auto">
+        <TabsList className="w-full justify-start overflow-x-auto sm:w-auto">
           <TabsTrigger value="about">About</TabsTrigger>
           <TabsTrigger value="projects">
             Projects {projects.length > 0 && `(${projects.length})`}

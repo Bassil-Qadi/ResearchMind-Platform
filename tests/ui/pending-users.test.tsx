@@ -53,6 +53,20 @@ describe('PendingUsers', () => {
 
     await waitFor(() => expect(screen.queryByText('Lina Haddad')).not.toBeInTheDocument())
     expect(sentBody(fetchMock, '/api/admin/users/u1', 'PATCH')).toEqual({ status: 'active' })
+  })
+
+  it('refreshes the user table and stats too, so the page does not contradict itself', async () => {
+    serve()
+    const user = userEvent.setup()
+    const { queryClient } = renderWithClient(<PendingUsers />)
+    const invalidate = vi.spyOn(queryClient, 'invalidateQueries')
+
+    await screen.findByText('Lina Haddad')
+    await user.click(screen.getAllByRole('button', { name: 'Approve' })[0])
+
+    // Regression: the table below kept showing an approved account as pending.
+    await waitFor(() => expect(invalidate).toHaveBeenCalledWith({ queryKey: ['admin-users'] }))
+    expect(invalidate).toHaveBeenCalledWith({ queryKey: ['admin-stats'] })
     expect(screen.getByText('Omar Nasser')).toBeInTheDocument()
   })
 

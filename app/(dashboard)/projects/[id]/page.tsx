@@ -32,7 +32,11 @@ import {
 import { apiFetch, errorMessage } from '@/lib/api'
 import { useQueryClient } from '@tanstack/react-query'
 import { cn } from '@/lib/utils'
-import { PROJECT_STATUS_STYLES as STATUS_STYLES } from '@/lib/status-styles'
+import { initialsOf } from '@/lib/names'
+import {
+  PROJECT_STATUS_LABELS as STATUS_LABELS,
+  PROJECT_STATUS_STYLES as STATUS_STYLES,
+} from '@/lib/status-styles'
 import { ProjectChat } from '@/components/messaging/project-chat'
 import { KanbanBoard } from '@/components/tasks/kanban-board'
 
@@ -189,7 +193,7 @@ export default function ProjectDetailPage() {
       {/* Status badges */}
       <div className="flex flex-wrap items-center gap-2">
         <Badge className={cn('rounded-full', STATUS_STYLES[project.status])}>
-          {project.status === 'seeking' ? 'Recruiting' : project.status.charAt(0).toUpperCase() + project.status.slice(1)}
+          {STATUS_LABELS[project.status] ?? project.status}
         </Badge>
         {project.tags.map((tag) => (
           <Badge key={tag} variant="secondary" className="rounded-full">
@@ -202,7 +206,8 @@ export default function ProjectDetailPage() {
       </div>
 
       <Tabs defaultValue={linkedTaskId ? 'tasks' : 'overview'} className="space-y-6">
-        <TabsList className="w-full justify-start sm:w-auto">
+        {/* Six tabs do not fit a phone: scroll the row rather than cut off Files and Requests. */}
+        <TabsList className="w-full justify-start overflow-x-auto sm:w-auto">
           <TabsTrigger value="overview">Overview</TabsTrigger>
           <TabsTrigger value="team">
             Team ({project.members.length})
@@ -225,7 +230,9 @@ export default function ProjectDetailPage() {
                 <CardTitle className="font-display text-base">Abstract</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
-                <p className="text-sm leading-relaxed text-muted-foreground break-all">
+                {/* break-words, not break-all: break-all split ordinary words ("Ra mtha")
+                    to wrap them; this only breaks a word too long for the line. */}
+                <p className="whitespace-pre-line break-words text-sm leading-relaxed text-muted-foreground">
                   {project.abstract}
                 </p>
 
@@ -271,7 +278,7 @@ export default function ProjectDetailPage() {
                   {(() => {
                     const pi = project.members.find((m) => m.role === 'pi')
                     if (!pi) return <p className="text-sm text-muted-foreground">Not assigned</p>
-                    const initials = pi.userId.name.split(' ').map((n) => n[0]).join('').slice(0, 2).toUpperCase()
+                    const initials = initialsOf(pi.userId.name)
                     return (
                       <div className="flex items-center gap-3">
                         <Avatar className="h-10 w-10">

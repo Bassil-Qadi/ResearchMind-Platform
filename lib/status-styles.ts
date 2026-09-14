@@ -19,6 +19,18 @@ export const PROJECT_STATUS_STYLES: Record<string, string> = {
   completed: 'bg-slate-500/15 text-slate-700 dark:text-slate-300',
 }
 
+/**
+ * What people read for Project.status. The stored value "seeking" is shown as
+ * "Recruiting", which the project page and filters already called it; the
+ * admin dashboard printed the raw lowercase value.
+ */
+export const PROJECT_STATUS_LABELS: Record<string, string> = {
+  active:    'Active',
+  seeking:   'Recruiting',
+  paused:    'Paused',
+  completed: 'Completed',
+}
+
 /** User.status — the account lifecycle, not a project's. */
 export const USER_STATUS_STYLES: Record<UserStatus, string> = {
   active:    'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300',

@@ -1,14 +1,9 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { initialsOf } from '@/lib/names'
 import { cn } from '@/lib/utils'
 
-export function initialsOf(name: string): string {
-  return name
-    .split(' ')
-    .map((part) => part[0])
-    .join('')
-    .slice(0, 2)
-    .toUpperCase()
-}
+// Re-exported for existing imports; the rules for titles live in lib/names.
+export { initialsOf }
 
 interface UserAvatarProps {
   name: string

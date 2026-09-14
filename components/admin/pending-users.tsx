@@ -48,8 +48,11 @@ export function PendingUsers() {
           users: (old?.users ?? []).filter((u) => u._id !== userId),
         })
       )
-      // Refresh admin stats
+      // The same people appear in the user table and the headline stats. Left
+      // alone, an approved account still read "pending" in the table below.
       queryClient.invalidateQueries({ queryKey: ['admin-stats'] })
+      queryClient.invalidateQueries({ queryKey: ['admin-users'] })
+      queryClient.invalidateQueries({ queryKey: ['users'] })
     } catch (err) {
       alert(errorMessage(err, 'Failed to update this account'))
     } finally {
@@ -89,7 +92,8 @@ export function PendingUsers() {
         ) : (
           <ul className="divide-y divide-border/60">
             {pending.map((user) => (
-              <li key={user._id} className="flex items-center justify-between gap-4 py-4 first:pt-0 last:pb-0">
+              // Stacked on phones: side by side, the buttons left the name one letter wide.
+              <li key={user._id} className="flex flex-col gap-3 py-4 first:pt-0 last:pb-0 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
                 <div className="min-w-0">
                   <div className="flex items-center gap-2">
                     <p className="truncate text-sm font-medium">{user.name}</p>

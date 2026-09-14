@@ -20,6 +20,7 @@ import { cn } from '@/lib/utils'
 import { PendingUsers } from '@/components/admin/pending-users'
 import { UserManagement } from '@/components/admin/user-management'
 import {
+  PROJECT_STATUS_LABELS as STATUS_LABELS,
   PROJECT_STATUS_STYLES as STATUS_STYLES, ROLE_STYLES,
 } from '@/lib/status-styles'
 
@@ -33,8 +34,6 @@ const DEPT_COLORS = [
 
 export default function AdminPage() {
   const { data, isLoading, isError } = useAdminStats()
-
-  console.log(data)
 
   if (isError) {
     return (
@@ -73,10 +72,13 @@ export default function AdminPage() {
           <StatCard
             title="Total users"
             value={data!.overview.totalUsers}
-            description={`+${data!.overview.newUsersThisMonth} this month`}
+            // The trend already carries the number; repeating it as the
+            // description printed "+4 this month" twice. Both counts cover the
+            // last 30 days, so they say so rather than "this month".
+            description="joined in 30 days"
             icon={Users}
             accent="directory"
-            trend={{ value: `+${data!.overview.newUsersThisMonth} this month`, direction: 'up' }}
+            trend={{ value: `+${data!.overview.newUsersThisMonth}`, direction: 'up' }}
           />
           <StatCard
             title="Total projects"
@@ -88,10 +90,10 @@ export default function AdminPage() {
           <StatCard
             title="Messages sent"
             value={data!.overview.totalMessages}
-            description={`${data!.overview.messagesThisMonth} in last 30 days`}
+            description="sent in 30 days"
             icon={MessageSquare}
             accent="messages"
-            trend={{ value: `+${data!.overview.messagesThisMonth} this month`, direction: 'up' }}
+            trend={{ value: `+${data!.overview.messagesThisMonth}`, direction: 'up' }}
           />
           <StatCard
             title="Tasks completed"
@@ -171,7 +173,7 @@ export default function AdminPage() {
                 {data!.charts.projectsByStatus.map(({ _id, count }) => (
                   <li key={_id} className="flex items-center justify-between rounded-xl border border-border/60 px-3 py-2.5">
                     <Badge className={cn('rounded-full', STATUS_STYLES[_id] ?? 'bg-muted')}>
-                      {_id}
+                      {STATUS_LABELS[_id] ?? _id}
                     </Badge>
                     <span className="font-display text-lg font-bold">{count}</span>
                   </li>
@@ -284,7 +286,7 @@ export default function AdminPage() {
                       </div>
                       <div className="flex shrink-0 flex-col items-end gap-1">
                         <Badge className={cn('rounded-full text-[10px]', STATUS_STYLES[project.status] ?? 'bg-muted')}>
-                          {project.status}
+                          {STATUS_LABELS[project.status] ?? project.status}
                         </Badge>
                         <span className="flex items-center gap-1 text-[10px] text-muted-foreground">
                           <Clock className="h-2.5 w-2.5" />

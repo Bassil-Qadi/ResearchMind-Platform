@@ -7,6 +7,8 @@ import { useProjectMessages } from '@/hooks/useProjectMessages'
 import { EVENTS } from '@/lib/realtime/channels'
 import { projectChannelHandle, subscribeProject } from '@/lib/realtime/client'
 import { apiFetch } from '@/lib/api'
+import { initialsOf } from '@/lib/names'
+import { messageTime } from '@/lib/format-time'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -122,8 +124,7 @@ export function ProjectChat({ projectId }: { projectId: string }) {
         ) : (
           messages.map((msg) => {
             const isMe = msg.senderId._id === session?.user?.id
-            const initials = msg.senderId.name
-              .split(' ').map((n) => n[0]).join('').slice(0, 2).toUpperCase()
+            const initials = initialsOf(msg.senderId.name)
 
             return (
               <div
@@ -152,9 +153,7 @@ export function ProjectChat({ projectId }: { projectId: string }) {
                     {msg.content}
                   </div>
                   <p className="text-[10px] text-muted-foreground px-1">
-                    {new Date(msg.createdAt).toLocaleTimeString([], {
-                      hour: '2-digit', minute: '2-digit'
-                    })}
+                    {messageTime(msg.createdAt)}
                   </p>
                 </div>
               </div>

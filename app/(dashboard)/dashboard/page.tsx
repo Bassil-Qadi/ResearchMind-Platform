@@ -5,10 +5,11 @@ import { PageContainer } from '@/components/layout/page-container'
 import { PageHeader } from '@/components/layout/page-header'
 import { DashboardStats } from '@/components/dashboard/dashboard-stats'
 import { Button } from '@/components/ui/button'
+import { givenName } from '@/lib/names'
 
 export default async function DashboardPage() {
   const session   = await auth()
-  const firstName = session?.user?.name?.split(' ')[0] ?? 'there'
+  const firstName = givenName(session?.user?.name) ?? 'there'
   const role      = session?.user?.role ?? '—'
 
   return (
