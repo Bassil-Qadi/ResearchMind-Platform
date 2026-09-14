@@ -76,17 +76,20 @@ export default async function HomePage() {
               <BookOpen className="h-4 w-4" aria-hidden />
             </div>
             <span className="flex flex-col leading-tight">
-              <span className="font-display font-bold tracking-tight">
+              {/* One line on phones too: wrapped, it pushed the Arabic name out of line. */}
+              <span className="whitespace-nowrap font-display text-sm font-bold tracking-tight sm:text-base">
                 {UNIVERSITY.name}
               </span>
-              <span lang="ar" dir="rtl" className="text-[11px] text-muted-foreground">
+              {/* self-start: right-to-left text would otherwise sit against the far edge. */}
+              <span lang="ar" dir="rtl" className="self-start text-[11px] text-muted-foreground">
                 {UNIVERSITY.nameArabic}
               </span>
             </span>
           </Link>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 sm:gap-2">
             <ThemeToggle />
-            <Button asChild variant="ghost" size="sm" className="rounded-lg">
+            {/* Hidden on phones for room; the hero's first button signs in. */}
+            <Button asChild variant="ghost" size="sm" className="hidden rounded-lg sm:inline-flex">
               <Link href="/login">Sign in</Link>
             </Button>
             <Button asChild size="sm" className="btn-glow rounded-lg shadow-md">

@@ -41,6 +41,18 @@ export function appUrl(): string {
   )
 }
 
+/**
+ * Top-level domains reserved so that they never resolve (RFC 2606 and 6761).
+ * The demo data gives every account one, so nothing done in a demo can reach a
+ * real person, and skipping them avoids bounces that count against the
+ * sending domain's reputation.
+ */
+const RESERVED_TLD = /\.(test|example|invalid|localhost)$/i
+
+export function isDeliverable(address: string): boolean {
+  return !RESERVED_TLD.test(address.trim())
+}
+
 let client: Resend | null = null
 
 function getClient(): Resend {
@@ -55,9 +67,14 @@ export async function sendEmail({
     return { sent: false, reason: 'RESEND_API_KEY is not set' }
   }
 
-  const recipients = (Array.isArray(to) ? to : [to]).filter(Boolean)
-  if (recipients.length === 0) {
+  const addressed = (Array.isArray(to) ? to : [to]).filter(Boolean)
+  if (addressed.length === 0) {
     return { sent: false, reason: 'No recipients' }
+  }
+
+  const recipients = addressed.filter(isDeliverable)
+  if (recipients.length === 0) {
+    return { sent: false, reason: 'No deliverable recipients' }
   }
 
   try {

@@ -9,6 +9,8 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "seed": "tsx scripts/seed-dev-user.ts",
+    "seed:demo": "tsx scripts/seed-demo.ts",
+    "dev:demo": "tsx scripts/dev-demo.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "sync-indexes": "tsx scripts/sync-indexes.ts",
