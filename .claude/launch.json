@@ -4,8 +4,23 @@
     {
       "name": "dev",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
       "port": 3000
+    },
+    {
+      "name": "researchmind",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "C:/Users/USER/ResearchMind Platform/node_modules/next/dist/bin/next",
+        "dev",
+        "C:/Users/USER/ResearchMind Platform",
+        "-p",
+        "3010"
+      ],
+      "port": 3010
     }
   ]
 }
