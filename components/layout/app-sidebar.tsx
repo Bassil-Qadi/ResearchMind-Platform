@@ -12,7 +12,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { SidebarBrand, SidebarNav } from "@/components/layout/sidebar-nav";
 import { cn } from "@/lib/utils";
-import { UNIVERSITY, UNIVERSITY_LOCATION } from '@/lib/brand'
 
 export function AppSidebar() {
   return (
@@ -30,7 +29,7 @@ export function AppSidebar() {
       <SidebarNav />
       <div className="border-t border-sidebar-border/80 p-4">
         <p className="text-xs text-sidebar-foreground/50">
-          {UNIVERSITY.name} · {UNIVERSITY_LOCATION}
+          University research workspace
         </p>
       </div>
     </aside>

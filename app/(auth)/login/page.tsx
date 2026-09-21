@@ -26,7 +26,7 @@ import {
   AUTH_ERROR_MESSAGES,
   DEFAULT_AUTH_ERROR_MESSAGE,
 } from "@/lib/auth/errors";
-import { EMAIL_PLACEHOLDER, UNIVERSITY } from "@/lib/brand";
+import { EMAIL_PLACEHOLDER, PLATFORM } from "@/lib/brand";
 
 function LoginForm() {
   const router = useRouter();
@@ -89,7 +89,7 @@ function LoginForm() {
         )}
 
         <div className="space-y-2">
-          <Label htmlFor="email">{UNIVERSITY.name} email</Label>
+          <Label htmlFor="email">Email</Label>
 
           <Input
             id="email"
@@ -99,7 +99,7 @@ function LoginForm() {
             onChange={(e) => setEmail(e.target.value)}
             required
             autoComplete="email"
-            className="h-11 rounded-xl transition-shadow focus-visible:shadow-[0_0_0_3px] focus-visible:shadow-teal-500/20"
+            className="h-11 rounded-xl transition-shadow focus-visible:shadow-[0_0_0_3px] focus-visible:shadow-violet-500/20"
           />
         </div>
 
@@ -122,7 +122,7 @@ function LoginForm() {
             onChange={(e) => setPassword(e.target.value)}
             required
             autoComplete="current-password"
-            className="h-11 rounded-xl transition-shadow focus-visible:shadow-[0_0_0_3px] focus-visible:shadow-teal-500/20"
+            className="h-11 rounded-xl transition-shadow focus-visible:shadow-[0_0_0_3px] focus-visible:shadow-violet-500/20"
           />
         </div>
 
@@ -174,9 +174,9 @@ export default function LoginPage() {
   return (
     <AuthShell
       title="Welcome back"
-      description={`Sign in with your ${UNIVERSITY.name} credentials to access your research workspace.`}
-      heroHeading={`Your ${UNIVERSITY.short} research workspace`}
-      heroBody="Sign in to discover projects, connect with researchers, and collaborate across faculties — all in one secure platform."
+      description={`Sign in to your ${PLATFORM.name} account to access your research workspace.`}
+      heroHeading="Your research workspace"
+      heroBody="Sign in to discover projects, connect with researchers, and collaborate across departments — all in one secure platform."
     >
       <Suspense
         fallback={

@@ -25,11 +25,11 @@ import {
 } from '@/lib/status-styles'
 
 const DEPT_COLORS = [
-  'bg-green-600',
-  'bg-teal-500',
+  'bg-blue-500',
+  'bg-violet-500',
   'bg-emerald-500',
-  'bg-lime-600',
   'bg-amber-500',
+  'bg-green-500',
 ]
 
 export default function AdminPage() {
@@ -141,7 +141,7 @@ export default function AdminPage() {
                       </div>
                       <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
                         <div
-                          className="h-full rounded-full bg-green-600 transition-all duration-500"
+                          className="h-full rounded-full bg-blue-500 transition-all duration-500"
                           style={{ width: `${pct}%` }}
                         />
                       </div>

@@ -1,4 +1,4 @@
-# Research Collaboration Platform
+# ResearchMind
 
 University-wide platform for discovering research projects, forming teams, and collaborating in a single authenticated environment.
 
@@ -129,4 +129,4 @@ GitHub Actions runs lint, typecheck, and build on push/PR to `main`. See `.githu
 
 ## License
 
-Private — YU Research Platform
+Private — ResearchMind

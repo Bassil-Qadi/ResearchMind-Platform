@@ -58,7 +58,7 @@ export const NotificationBell = forwardRef<
       >
         <Bell className="h-4 w-4" />
         {unreadCount > 0 && (
-          <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-green-700 text-[10px] font-bold text-white">
+          <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-blue-600 text-[10px] font-bold text-white">
             {unreadCount > 9 ? '9+' : unreadCount}
           </span>
         )}
@@ -94,7 +94,7 @@ export const NotificationBell = forwardRef<
                 onClick={() => handleClick(n)}
                 className={cn(
                   'flex w-full items-start gap-3 px-4 py-3 text-left transition-colors hover:bg-muted/50',
-                  !n.read && 'bg-green-600/5'
+                  !n.read && 'bg-blue-500/5'
                 )}
               >
                 <span className="mt-0.5 text-base" aria-hidden>
@@ -112,7 +112,7 @@ export const NotificationBell = forwardRef<
                   </p>
                 </div>
                 {!n.read && (
-                  <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-green-600" />
+                  <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-blue-500" />
                 )}
               </button>
             ))

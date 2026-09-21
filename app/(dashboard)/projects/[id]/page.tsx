@@ -48,8 +48,8 @@ const ROLE_LABELS: Record<string, string> = {
 }
 
 const ROLE_GRADIENTS: Record<string, string> = {
-  'pi': 'from-teal-500 to-emerald-600',
-  'co-pi': 'from-green-500 to-emerald-600',
+  'pi': 'from-violet-500 to-purple-600',
+  'co-pi': 'from-blue-500 to-indigo-600',
   'contributor': 'from-teal-500 to-emerald-600',
   'observer': 'from-slate-400 to-slate-500',
 }
@@ -282,7 +282,7 @@ export default function ProjectDetailPage() {
                     return (
                       <div className="flex items-center gap-3">
                         <Avatar className="h-10 w-10">
-                          <AvatarFallback className="bg-gradient-to-br from-teal-500 to-emerald-600 text-xs font-semibold text-white">
+                          <AvatarFallback className="bg-gradient-to-br from-violet-500 to-purple-600 text-xs font-semibold text-white">
                             {initials}
                           </AvatarFallback>
                         </Avatar>

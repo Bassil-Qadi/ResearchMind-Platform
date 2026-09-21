@@ -16,10 +16,6 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { useProjects, type ProjectSummary } from '@/hooks/useProjects'
 import { useDepartments } from '@/hooks/useDepartments'
-
-/** The "no filter" option, kept in one place so the label and the check agree. */
-const ANY_FACULTY = 'All faculties'
-import { UNIVERSITY } from '@/lib/brand'
 import { cn } from '@/lib/utils'
 
 /** Project statuses as the API stores them, in the card's own vocabulary. */
@@ -43,13 +39,13 @@ export default function ProjectsPage() {
   const [search, setSearch]       = useState('')
   const [department, setDept]     = useState('')
   const debouncedSearch           = useDebounce(search, 400)
-  const DEPARTMENTS               = [ANY_FACULTY, ...useDepartments()]
+  const DEPARTMENTS               = ['All departments', ...useDepartments()]
 
   const { data, isLoading, isError } = useProjects({
     q:          debouncedSearch || undefined,
     status:     activeFilter !== 'mine' ? activeFilter || undefined : undefined,
     mine:       activeFilter === 'mine',
-    department: department && department !== ANY_FACULTY ? department : undefined,
+    department: department && department !== 'All departments' ? department : undefined,
   })
 
   const projects = data?.projects ?? []
@@ -58,7 +54,7 @@ export default function ProjectsPage() {
     <PageContainer>
       <PageHeader
         title="Projects"
-        description={`Discover and join research projects across ${UNIVERSITY.name}.`}
+        description="Discover and join research projects across the university."
         breadcrumbs={[
           { label: 'Dashboard', href: '/dashboard' },
           { label: 'Projects' },
@@ -77,8 +73,8 @@ export default function ProjectsPage() {
               className={cn(
                 'rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-200',
                 activeFilter === pill.value
-                  ? 'bg-green-700 text-white shadow-md shadow-green-600/25'
-                  : 'border border-border/60 bg-card/80 text-muted-foreground hover:border-green-600/30 hover:text-foreground'
+                  ? 'bg-blue-600 text-white shadow-md shadow-blue-500/25'
+                  : 'border border-border/60 bg-card/80 text-muted-foreground hover:border-blue-500/30 hover:text-foreground'
               )}
             >
               {pill.label}
@@ -98,7 +94,7 @@ export default function ProjectsPage() {
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" className="gap-2 rounded-xl">
                   <SlidersHorizontal className="h-4 w-4" />
-                  {department && department !== ANY_FACULTY ? department : 'Faculty'}
+                  {department && department !== 'All departments' ? department : 'Department'}
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start">

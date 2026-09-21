@@ -29,7 +29,7 @@ export function UserAvatar({
       <AvatarFallback
         className={cn(
           'bg-gradient-to-br text-xs font-semibold text-white',
-          fallbackClassName ?? 'from-green-500 to-emerald-600'
+          fallbackClassName ?? 'from-blue-500 to-indigo-600'
         )}
       >
         {initialsOf(name)}

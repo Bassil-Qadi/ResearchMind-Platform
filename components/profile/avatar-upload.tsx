@@ -91,7 +91,7 @@ export function AvatarUpload({ name, avatarUrl }: AvatarUploadProps) {
         name={name}
         src={avatarUrl}
         className="h-20 w-20"
-        fallbackClassName="from-green-600 to-teal-600 text-lg"
+        fallbackClassName="from-blue-600 to-violet-600 text-lg"
       />
 
       <div className="space-y-2">

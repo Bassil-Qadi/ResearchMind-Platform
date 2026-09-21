@@ -19,7 +19,7 @@ const pending: JoinRequest = {
   userId: {
     _id:        'u2',
     name:       'Sami Khalil',
-    department: 'Faculty of Science',
+    department: 'Natural Sciences',
     position:   'PhD Student',
   },
 }
@@ -48,7 +48,7 @@ describe('JoinRequestsPanel', () => {
     renderWithClient(<JoinRequestsPanel projectId="p1" canReview />)
 
     expect(await screen.findByRole('link', { name: 'Sami Khalil' })).toHaveAttribute('href', '/profile/u2')
-    expect(screen.getByText('PhD Student · Faculty of Science')).toBeInTheDocument()
+    expect(screen.getByText('PhD Student · Natural Sciences')).toBeInTheDocument()
     expect(screen.getByText('Applying for: Data analyst')).toBeInTheDocument()
     expect(screen.getByText('I have run similar field studies.')).toBeInTheDocument()
   })

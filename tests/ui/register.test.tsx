@@ -6,14 +6,14 @@ import RegisterPage from '@/app/(auth)/register/page'
 
 async function fillForm(user: ReturnType<typeof userEvent.setup>, overrides: { confirm?: string } = {}) {
   await user.type(screen.getByLabelText('Full name'), 'Lina Haddad')
-  await user.type(screen.getByLabelText(/email/i), 'lina@yu.edu.jo')
+  await user.type(screen.getByLabelText(/email/i), 'lina@university.edu')
 
   // Found by their visible labels, which is also how a screen reader names them.
   await user.click(screen.getByRole('combobox', { name: 'Role' }))
   await user.click(await screen.findByRole('option', { name: 'Researcher' }))
 
   await user.click(screen.getByRole('combobox', { name: 'Department' }))
-  await user.click(await screen.findByRole('option', { name: 'Faculty of Science' }))
+  await user.click(await screen.findByRole('option', { name: 'Natural Sciences' }))
 
   await user.type(screen.getByLabelText('Password'), 'long-enough-password')
   await user.type(screen.getByLabelText('Confirm password'), overrides.confirm ?? 'long-enough-password')
@@ -73,9 +73,9 @@ describe('Register page', () => {
     expect(await screen.findByText('Registration submitted!')).toBeInTheDocument()
     expect(sentBody(fetchMock, '/api/auth/register', 'POST')).toMatchObject({
       name:       'Lina Haddad',
-      email:      'lina@yu.edu.jo',
+      email:      'lina@university.edu',
       role:       'Researcher',
-      department: 'Faculty of Science',
+      department: 'Natural Sciences',
       password:   'long-enough-password',
     })
     expect(screen.getByRole('link', { name: 'Back to login' })).toHaveAttribute('href', '/login')

@@ -24,12 +24,12 @@ describe('Forgot password page', () => {
     render(<ForgotPasswordPage />)
 
     expect(screen.getByRole('button', { name: 'Send reset link' })).toBeDisabled()
-    await user.type(screen.getByLabelText(/email/i), 'lina@yu.edu.jo')
+    await user.type(screen.getByLabelText(/email/i), 'lina@university.edu')
     await user.click(screen.getByRole('button', { name: 'Send reset link' }))
 
     expect(await screen.findByText('Check your email')).toBeInTheDocument()
-    expect(screen.getByText('lina@yu.edu.jo')).toBeInTheDocument()
-    expect(sentBody(fetchMock, '/api/auth/forgot-password', 'POST')).toEqual({ email: 'lina@yu.edu.jo' })
+    expect(screen.getByText('lina@university.edu')).toBeInTheDocument()
+    expect(sentBody(fetchMock, '/api/auth/forgot-password', 'POST')).toEqual({ email: 'lina@university.edu' })
   })
 
   it('lets them go back and use a different address', async () => {
@@ -37,7 +37,7 @@ describe('Forgot password page', () => {
     const user = userEvent.setup()
     render(<ForgotPasswordPage />)
 
-    await user.type(screen.getByLabelText(/email/i), 'lina@yu.edu.jo')
+    await user.type(screen.getByLabelText(/email/i), 'lina@university.edu')
     await user.click(screen.getByRole('button', { name: 'Send reset link' }))
     await user.click(await screen.findByRole('button', { name: 'Use a different address' }))
 
@@ -61,7 +61,7 @@ describe('Forgot password page', () => {
     const user = userEvent.setup()
     render(<ForgotPasswordPage />)
 
-    await user.type(screen.getByLabelText(/email/i), 'lina@yu.edu.jo')
+    await user.type(screen.getByLabelText(/email/i), 'lina@university.edu')
     await user.click(screen.getByRole('button', { name: 'Send reset link' }))
 
     expect(await screen.findByRole('alert')).toHaveTextContent('Too many reset requests')

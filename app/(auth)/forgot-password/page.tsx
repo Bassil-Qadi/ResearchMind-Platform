@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { ArrowLeft, Loader2, MailCheck } from 'lucide-react'
 import { AuthShell } from '@/components/auth/auth-shell'
-import { EMAIL_PLACEHOLDER, UNIVERSITY } from '@/lib/brand'
+import { EMAIL_PLACEHOLDER } from '@/lib/brand'
 import { Button } from '@/components/ui/button'
 import { CardContent, CardFooter } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -91,7 +91,7 @@ export default function ForgotPasswordPage() {
   return (
     <AuthShell
       title="Forgot your password?"
-      description={`Enter your ${UNIVERSITY.name} email and we will send you a link to choose a new one.`}
+      description={"Enter your account's email and we will send you a link to choose a new one."}
       heroHeading="Getting you back in"
       heroBody="Reset links last an hour and can be used once."
     >
@@ -104,7 +104,7 @@ export default function ForgotPasswordPage() {
           )}
 
           <div className="space-y-2">
-            <Label htmlFor="email">{UNIVERSITY.name} email</Label>
+            <Label htmlFor="email">Email</Label>
             <Input
               id="email"
               type="email"

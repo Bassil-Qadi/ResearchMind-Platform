@@ -108,7 +108,7 @@ export function DirectChat({
                     className={cn(
                       'max-w-[75%] rounded-2xl px-3.5 py-2 text-sm',
                       mine
-                        ? 'bg-gradient-to-br from-teal-600 to-emerald-600 text-white'
+                        ? 'bg-gradient-to-br from-violet-600 to-purple-600 text-white'
                         : 'bg-muted'
                     )}
                   >

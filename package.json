@@ -1,5 +1,5 @@
 {
-  "name": "research-collaboration-platform",
+  "name": "researchmind",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,9 +9,6 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "seed": "tsx scripts/seed-dev-user.ts",
-    "seed:demo": "tsx scripts/seed-demo.ts",
-    "dev:demo": "tsx scripts/dev-demo.ts",
-    "start:demo": "tsx scripts/start-demo.ts",
     "test": "vitest run",
     "test:watch": "vitest",
     "sync-indexes": "tsx scripts/sync-indexes.ts",

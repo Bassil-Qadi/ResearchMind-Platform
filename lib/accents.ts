@@ -1,46 +1,40 @@
-/**
- * Category accent colors used consistently across nav, stat cards, and badges.
- *
- * Yarmouk's green leads, and the rest of the scale walks away from it far
- * enough to stay tellable apart — the point of these is that a section is
- * recognisable at a glance, so they are a code first and decoration second.
- */
+/** Category accent colors used consistently across nav, stat cards, and badges. */
 export const categoryAccents = {
   dashboard: {
     label: "Dashboard",
-    icon: "text-green-700 dark:text-green-400",
-    iconBg: "bg-green-600/15",
-    border: "border-green-600/30",
-    glow: "shadow-green-600/20",
-    gradient: "from-green-600 to-green-700",
-    badge: "bg-green-600/15 text-green-800 dark:text-green-300",
+    icon: "text-sky-600 dark:text-sky-400",
+    iconBg: "bg-sky-500/15",
+    border: "border-sky-500/30",
+    glow: "shadow-sky-500/20",
+    gradient: "from-sky-500 to-blue-600",
+    badge: "bg-sky-500/15 text-sky-700 dark:text-sky-300",
   },
   projects: {
     label: "Projects",
-    icon: "text-emerald-600 dark:text-emerald-400",
-    iconBg: "bg-emerald-500/15",
-    border: "border-emerald-500/30",
-    glow: "shadow-emerald-500/20",
-    gradient: "from-emerald-500 to-green-700",
-    badge: "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300",
+    icon: "text-blue-600 dark:text-blue-400",
+    iconBg: "bg-blue-500/15",
+    border: "border-blue-500/30",
+    glow: "shadow-blue-500/20",
+    gradient: "from-blue-500 to-indigo-600",
+    badge: "bg-blue-500/15 text-blue-700 dark:text-blue-300",
   },
   messages: {
     label: "Messages",
+    icon: "text-violet-600 dark:text-violet-400",
+    iconBg: "bg-violet-500/15",
+    border: "border-violet-500/30",
+    glow: "shadow-violet-500/20",
+    gradient: "from-violet-500 to-purple-600",
+    badge: "bg-violet-500/15 text-violet-700 dark:text-violet-300",
+  },
+  directory: {
+    label: "Directory",
     icon: "text-teal-600 dark:text-teal-400",
     iconBg: "bg-teal-500/15",
     border: "border-teal-500/30",
     glow: "shadow-teal-500/20",
     gradient: "from-teal-500 to-emerald-600",
     badge: "bg-teal-500/15 text-teal-700 dark:text-teal-300",
-  },
-  directory: {
-    label: "Directory",
-    icon: "text-lime-700 dark:text-lime-400",
-    iconBg: "bg-lime-600/15",
-    border: "border-lime-600/30",
-    glow: "shadow-lime-600/20",
-    gradient: "from-lime-600 to-green-700",
-    badge: "bg-lime-600/15 text-lime-800 dark:text-lime-300",
   },
   profile: {
     label: "Profile",

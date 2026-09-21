@@ -20,10 +20,9 @@ loadEnvConfig(process.cwd());
 
 const BCRYPT_ROUNDS = 12;
 
-// Typed against Yarmouk's faculty list, so a value that is not on it (this was
+// Typed against the department list, so a value that is not on it (this was
 // once "Computer Science") fails the type check instead of reaching the database.
-// Matches the demo account already stored.
-const DEMO_DEPARTMENT: Department = "Hijjawi Faculty for Engineering Technology";
+const DEMO_DEPARTMENT: Department = "Engineering";
 
 async function main() {
   if (process.env.NODE_ENV === "production") {

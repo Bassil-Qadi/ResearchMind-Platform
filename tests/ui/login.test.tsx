@@ -23,7 +23,7 @@ beforeEach(() => {
   nav.params = new URLSearchParams()
 })
 
-async function signInWith(email = 'researcher@yu.edu.jo', password = 'correct-horse') {
+async function signInWith(email = 'researcher@university.edu', password = 'correct-horse') {
   const user = userEvent.setup()
   render(<LoginPage />)
   await user.type(screen.getByLabelText(/email/i), email)
@@ -40,7 +40,7 @@ describe('Login page', () => {
     await signInWith()
 
     expect(auth.signIn).toHaveBeenCalledWith('credentials', {
-      email:    'researcher@yu.edu.jo',
+      email:    'researcher@university.edu',
       password: 'correct-horse',
       redirect: false,
     })

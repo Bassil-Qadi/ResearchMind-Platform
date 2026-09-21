@@ -20,9 +20,9 @@ import { useDirectConversations } from '@/hooks/useDirectMessages'
 import { cn } from '@/lib/utils'
 
 const GRADIENTS = [
-  'from-green-600 to-emerald-700',
+  'from-violet-500 to-purple-600',
+  'from-blue-500 to-indigo-600',
   'from-teal-500 to-emerald-600',
-  'from-lime-600 to-green-700',
   'from-rose-500 to-pink-600',
   'from-amber-500 to-orange-600',
 ]
@@ -87,7 +87,7 @@ function MessagesView() {
                   <MessageSquare className="h-3.5 w-3.5" />
                   Direct
                   {directUnread > 0 && (
-                    <Badge className="ml-1 h-4 min-w-4 rounded-full bg-teal-600 px-1 text-[10px]">
+                    <Badge className="ml-1 h-4 min-w-4 rounded-full bg-violet-600 px-1 text-[10px]">
                       {directUnread > 9 ? '9+' : directUnread}
                     </Badge>
                   )}
@@ -125,8 +125,8 @@ function MessagesView() {
                           type="button"
                           onClick={() => setSelectedProject(conv.id)}
                           className={cn(
-                            'flex w-full items-start gap-3 border-b border-border/40 px-4 py-3.5 text-left transition-all duration-200 hover:bg-teal-500/5',
-                            isActive && 'border-l-2 border-l-teal-500 bg-teal-500/10'
+                            'flex w-full items-start gap-3 border-b border-border/40 px-4 py-3.5 text-left transition-all duration-200 hover:bg-violet-500/5',
+                            isActive && 'border-l-2 border-l-violet-500 bg-violet-500/10'
                           )}
                         >
                           <Avatar className="h-10 w-10 shrink-0">
@@ -146,7 +146,7 @@ function MessagesView() {
                             <p className="mt-0.5 truncate text-xs text-muted-foreground">{lastMsg}</p>
                           </div>
                           {conv.unreadCount > 0 && (
-                            <Badge className="h-5 min-w-5 shrink-0 rounded-full bg-teal-600 px-1.5 text-[10px]">
+                            <Badge className="h-5 min-w-5 shrink-0 rounded-full bg-violet-600 px-1.5 text-[10px]">
                               {conv.unreadCount > 9 ? '9+' : conv.unreadCount}
                             </Badge>
                           )}
@@ -178,8 +178,8 @@ function MessagesView() {
                         type="button"
                         onClick={() => setSelectedDirect(conv.id)}
                         className={cn(
-                          'flex w-full items-start gap-3 border-b border-border/40 px-4 py-3.5 text-left transition-all duration-200 hover:bg-teal-500/5',
-                          isActive && 'border-l-2 border-l-teal-500 bg-teal-500/10'
+                          'flex w-full items-start gap-3 border-b border-border/40 px-4 py-3.5 text-left transition-all duration-200 hover:bg-violet-500/5',
+                          isActive && 'border-l-2 border-l-violet-500 bg-violet-500/10'
                         )}
                       >
                         <UserAvatar
@@ -199,7 +199,7 @@ function MessagesView() {
                           <p className="mt-0.5 truncate text-xs text-muted-foreground">{preview}</p>
                         </div>
                         {conv.unreadCount > 0 && (
-                          <Badge className="h-5 min-w-5 shrink-0 rounded-full bg-teal-600 px-1.5 text-[10px]">
+                          <Badge className="h-5 min-w-5 shrink-0 rounded-full bg-violet-600 px-1.5 text-[10px]">
                             {conv.unreadCount > 9 ? '9+' : conv.unreadCount}
                           </Badge>
                         )}

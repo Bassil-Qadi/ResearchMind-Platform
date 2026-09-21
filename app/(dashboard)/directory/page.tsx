@@ -15,9 +15,6 @@ import {
 import { useUsers } from '@/hooks/useUsers'
 import { useDebounce } from '@/hooks/useDebounce'
 import { useDepartments } from '@/hooks/useDepartments'
-
-/** The "no filter" option, kept in one place so the label and the check agree. */
-const ANY_FACULTY = 'All faculties'
 import { USER_ROLES } from '@/types'
 
 // Every role the platform has — Researcher and Admin used to be missing, so
@@ -29,11 +26,11 @@ export default function DirectoryPage() {
   const [department, setDept]   = useState('')
   const [role, setRole]         = useState('')
   const debouncedSearch         = useDebounce(search, 400)
-  const DEPARTMENTS             = [ANY_FACULTY, ...useDepartments()]
+  const DEPARTMENTS             = ['All departments', ...useDepartments()]
 
   const { data, isLoading, isError } = useUsers({
     q:          debouncedSearch || undefined,
-    department: department && department !== ANY_FACULTY ? department : undefined,
+    department: department && department !== 'All departments' ? department : undefined,
     role:       role && role !== 'All roles' ? role : undefined,
   })
 
@@ -61,7 +58,7 @@ export default function DirectoryPage() {
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="gap-2 rounded-xl sm:w-auto">
               <SlidersHorizontal className="h-4 w-4" />
-              {department && department !== ANY_FACULTY ? department : 'Faculty'}
+              {department && department !== 'All departments' ? department : 'Department'}
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start">

@@ -1,5 +1,5 @@
 import { appUrl } from '@/lib/email/client'
-import { PLATFORM, UNIVERSITY } from '@/lib/brand'
+import { PLATFORM } from '@/lib/brand'
 
 export interface EmailContent {
   subject: string
@@ -28,7 +28,7 @@ interface LayoutOptions {
 function layout({ heading, body, cta, footer }: LayoutOptions): string {
   const button = cta
     ? `<tr><td style="padding:8px 0 24px;">
-         <a href="${cta.href}" style="display:inline-block;background:#15803d;color:#ffffff;text-decoration:none;font-weight:600;font-size:14px;padding:11px 20px;border-radius:10px;">${esc(cta.label)}</a>
+         <a href="${cta.href}" style="display:inline-block;background:#2563eb;color:#ffffff;text-decoration:none;font-weight:600;font-size:14px;padding:11px 20px;border-radius:10px;">${esc(cta.label)}</a>
        </td></tr>`
     : ''
 
@@ -37,12 +37,12 @@ function layout({ heading, body, cta, footer }: LayoutOptions): string {
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f6f7f9;padding:32px 16px;">
     <tr><td align="center">
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;background:#ffffff;border-radius:14px;border:1px solid #e6e8eb;padding:32px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#1f2933;">
-        <tr><td style="font-size:13px;font-weight:600;color:#6b7280;letter-spacing:0.04em;text-transform:uppercase;padding-bottom:16px;">${esc(UNIVERSITY.name)}</td></tr>
+        <tr><td style="font-size:13px;font-weight:600;color:#6b7280;letter-spacing:0.04em;text-transform:uppercase;padding-bottom:16px;">${esc(PLATFORM.name)}</td></tr>
         <tr><td style="font-size:20px;font-weight:700;line-height:1.35;padding-bottom:12px;">${esc(heading)}</td></tr>
         <tr><td style="font-size:15px;line-height:1.6;color:#3f4a56;padding-bottom:20px;">${body}</td></tr>
         ${button}
         <tr><td style="font-size:12px;line-height:1.6;color:#9aa3ad;border-top:1px solid #eceef0;padding-top:16px;">
-          ${esc(footer ?? `You are receiving this because you have an account on the ${PLATFORM.name}.`)}
+          ${esc(footer ?? `You are receiving this because you have an account on ${PLATFORM.name}.`)}
         </td></tr>
       </table>
     </td></tr>
@@ -59,7 +59,7 @@ function p(text: string): string {
 export function registrationReceived(name: string): EmailContent {
   const lines = [
     `Hi ${name},`,
-    `Thanks for requesting access to the ${PLATFORM.name}. An administrator will review your registration shortly.`,
+    `Thanks for requesting access to ${PLATFORM.name}. An administrator will review your registration shortly.`,
     'You will get another email as soon as your account is approved. You will not be able to sign in until then.',
   ]
 
@@ -222,7 +222,7 @@ export function joinRequestDeclined(
 export function accountSuspended(name: string, reason?: string): EmailContent {
   const lines = [
     `Hi ${name},`,
-    `Your access to the ${PLATFORM.name} has been suspended by an administrator.`,
+    `Your access to ${PLATFORM.name} has been suspended by an administrator.`,
     ...(reason ? [`Reason: ${reason}`] : []),
     'If you think this is a mistake, please contact your university administrator.',
   ]

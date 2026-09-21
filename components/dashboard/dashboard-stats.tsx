@@ -13,7 +13,6 @@ import {
 import { categoryAccents } from '@/lib/accents'
 import { cn } from '@/lib/utils'
 import { PROJECT_STATUS_STYLES as STATUS_STYLES } from '@/lib/status-styles'
-import { UNIVERSITY } from '@/lib/brand'
 
 const quickActions = [
   {
@@ -53,7 +52,7 @@ export function DashboardStats({ role }: DashboardStatsProps) {
         <StatCard
           title="Your role"
           value={role}
-          description={`${UNIVERSITY.name} profile`}
+          description="University profile"
           icon={UserCircle}
           accent="profile"
         />
@@ -119,7 +118,7 @@ export function DashboardStats({ role }: DashboardStatsProps) {
                       className="flex items-center gap-3 rounded-xl p-3 transition-colors hover:bg-muted/50"
                     >
                       <Avatar className="h-9 w-9 shrink-0">
-                        <AvatarFallback className="bg-gradient-to-br from-green-500 to-emerald-600 text-xs font-semibold text-white">
+                        <AvatarFallback className="bg-gradient-to-br from-blue-500 to-indigo-600 text-xs font-semibold text-white">
                           {project.title.slice(0, 2).toUpperCase()}
                         </AvatarFallback>
                       </Avatar>

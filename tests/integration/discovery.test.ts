@@ -26,11 +26,11 @@ async function search(q: string) {
 describe('the directory', () => {
   it('finds a department whatever case it was stored in', async () => {
     const viewer = await makeUser({})
-    await makeUser({ name: 'Lower Case', department: 'hijjawi faculty for engineering technology' })
-    await makeUser({ name: 'Title Case', department: 'Hijjawi Faculty for Engineering Technology' })
+    await makeUser({ name: 'Lower Case', department: 'engineering' })
+    await makeUser({ name: 'Title Case', department: 'Engineering' })
 
     await signedInAs(viewer)
-    const res = await directory('?department=Hijjawi%20Faculty%20for%20Engineering%20Technology')
+    const res = await directory('?department=Engineering')
 
     expect(names(res.users)).toEqual(['Lower Case', 'Title Case'])
   })
@@ -73,12 +73,12 @@ describe('project filters', () => {
     const Project = (await import('@/lib/db/models/Project')).default
 
     const lower = await makeProject(pi, { title: 'Stored lower case' })
-    await Project.updateOne({ _id: lower._id }, { $set: { department: 'hijjawi faculty for engineering technology' } })
+    await Project.updateOne({ _id: lower._id }, { $set: { department: 'engineering' } })
     const title = await makeProject(pi, { title: 'Stored title case' })
-    await Project.updateOne({ _id: title._id }, { $set: { department: 'Hijjawi Faculty for Engineering Technology' } })
+    await Project.updateOne({ _id: title._id }, { $set: { department: 'Engineering' } })
 
     await signedInAs(pi)
-    const res = await projects('?department=Hijjawi%20Faculty%20for%20Engineering%20Technology')
+    const res = await projects('?department=Engineering')
     const titles = res.projects.map((p: { title: string }) => p.title).sort()
 
     // The page used to lower-case the filter to find the first; that broke the second.
@@ -94,13 +94,13 @@ describe('departments are stored in one spelling', () => {
       headers: { 'x-forwarded-for': '203.0.113.201' },
       body: {
         name: 'New Person', email: 'new@university.edu', password: 'a-good-password',
-        role: 'Student', department: '  hijjawi faculty   for engineering technology ',
+        role: 'Student', department: '  natural   sciences ',
       },
     }))
 
     const { User } = await import('@/lib/db/models/user')
     expect((await User.findOne({ email: 'new@university.edu' }).lean())?.department)
-      .toBe('Hijjawi Faculty for Engineering Technology')
+      .toBe('Natural Sciences')
   })
 
   it('on project creation and edit', async () => {
@@ -111,19 +111,19 @@ describe('departments are stored in one spelling', () => {
     const created = await body(await POST(jsonRequest('/x', {
       method: 'POST',
       body: {
-        title: 'Normalised project', department: 'faculty of medicine', startDate: '2026-01-01',
+        title: 'Normalised project', department: 'social sciences', startDate: '2026-01-01',
         abstract: 'An abstract long enough to satisfy the fifty character minimum imposed by the schema.',
         tags: [], openPositions: [],
       },
     })))
-    expect(created.department).toBe('Faculty of Medicine')
+    expect(created.department).toBe('Social Sciences')
 
     const { PATCH } = await import('@/app/api/projects/[id]/route')
     const edited = await body(await PATCH(
-      jsonRequest('/x', { method: 'PATCH', body: { department: 'FACULTY OF BUSINESS' } }),
+      jsonRequest('/x', { method: 'PATCH', body: { department: 'BUSINESS & ECONOMICS' } }),
       { params: { id: created._id } }
     ))
-    expect(edited.department).toBe('Faculty of Business')
+    expect(edited.department).toBe('Business & Economics')
   })
 
   it('on a profile edit', async () => {
@@ -132,25 +132,25 @@ describe('departments are stored in one spelling', () => {
 
     const { PATCH } = await import('@/app/api/users/me/route')
     const res = await body(await PATCH(jsonRequest('/x', {
-      method: 'PATCH', body: { department: 'faculty of science' },
+      method: 'PATCH', body: { department: 'health sciences' },
     })))
 
-    expect(res.department).toBe('Faculty of Science')
+    expect(res.department).toBe('Health Sciences')
   })
 })
 
 describe('GET /api/departments', () => {
   it('offers every canonical department plus any in use, without case duplicates', async () => {
-    const viewer = await makeUser({ department: 'hijjawi faculty for engineering technology' })
+    const viewer = await makeUser({ department: 'engineering' })
     await makeUser({ department: 'Computer Science' })
 
     await signedInAs(viewer)
     const { GET } = await import('@/app/api/departments/route')
     const { departments } = await body(await GET())
 
-    expect(departments).toContain('Faculty of Business') // canonical, even if unused
+    expect(departments).toContain('Business & Economics') // canonical, even if unused
     expect(departments).toContain('Computer Science')   // legacy, still filterable
-    expect(departments.filter((d: string) => d.toLowerCase() === 'hijjawi faculty for engineering technology')).toHaveLength(1)
+    expect(departments.filter((d: string) => d.toLowerCase() === 'engineering')).toHaveLength(1)
   })
 })
 
@@ -172,7 +172,7 @@ describe('profiles of inactive accounts', () => {
 describe('the header search', () => {
   it('finds projects and people', async () => {
     // A department without 'comp' in it, so the query below matches only the project.
-    const pi = await makeUser({ name: 'Grace Hopper', department: 'Hijjawi Faculty for Engineering Technology' })
+    const pi = await makeUser({ name: 'Grace Hopper', department: 'Engineering' })
     await makeProject(pi, { title: 'Compiler Construction' })
 
     await signedInAs(pi)
@@ -217,9 +217,9 @@ describe('the header search', () => {
 
 describe('the landing page figures', () => {
   it('count only what is real and active', async () => {
-    const pi = await makeUser({ department: 'Hijjawi Faculty for Engineering Technology' })
-    await makeUser({ department: 'hijjawi faculty for engineering technology' }) // same department, other case
-    await makeUser({ department: 'Faculty of Medicine' })
+    const pi = await makeUser({ department: 'Engineering' })
+    await makeUser({ department: 'engineering' }) // same department, other case
+    await makeUser({ department: 'Medicine' })
     await makeUser({ status: 'pending', department: 'Somewhere Else' })
     await makeProject(pi, { status: 'active' })
     await makeProject(pi, { status: 'seeking' })

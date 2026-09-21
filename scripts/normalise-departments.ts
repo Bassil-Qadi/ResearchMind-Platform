@@ -30,23 +30,34 @@ const apply = process.argv.includes('--apply')
 const canonical = new Set<string>(DEPARTMENTS)
 
 /**
- * Spellings from before the list held Yarmouk's own faculties, mapped by hand.
- * Each entry is a decision someone made about where that department belongs,
- * not something the script could work out — so they live here in the open.
- * Keys are matched trimmed, whitespace-collapsed and lowercased.
+ * Spellings from earlier department lists, mapped by hand onto the current
+ * fields. Each entry is a decision someone made about where that department
+ * belongs, not something the script could work out — so they live here in the
+ * open. Keys are matched trimmed, whitespace-collapsed and lowercased.
  */
 const ALIASES: Record<string, string> = {
-  // The generic placeholder list this platform shipped with.
-  'school of engineering':      'Hijjawi Faculty for Engineering Technology',
-  'college of natural sciences': 'Faculty of Science',
-  'school of social sciences':   'Faculty of Arts',
-  'school of medicine':          'Faculty of Medicine',
-  'school of business':          'Faculty of Business',
-  'college of arts & humanities': 'Faculty of Arts',
-  'school of education':         'Faculty of Educational Sciences',
+  // The first placeholder list this platform shipped with.
+  'school of engineering':        'Engineering',
+  'college of natural sciences':  'Natural Sciences',
+  'school of social sciences':    'Social Sciences',
+  'school of medicine':           'Medicine',
+  'school of business':           'Business & Economics',
+  'college of arts & humanities': 'Arts & Humanities',
+  'school of education':          'Education',
+  // Faculty names, for data brought over from a single-university install.
+  'faculty of medicine':          'Medicine',
+  'faculty of pharmacy':          'Pharmacy',
+  'faculty of nursing':           'Nursing',
+  'faculty of science':           'Natural Sciences',
+  'faculty of engineering':       'Engineering',
+  'faculty of business':          'Business & Economics',
+  'faculty of arts':              'Arts & Humanities',
+  'faculty of law':               'Law',
+  'faculty of educational sciences': 'Education',
+  'faculty of mass communication':   'Media & Communication',
   // Typed by hand before any list existed.
-  'computer sciencess': 'Faculty of Information Technology and Computer Science',
-  'computer science':   'Faculty of Information Technology and Computer Science',
+  'computer sciencess': 'Computer Science & IT',
+  'computer science':   'Computer Science & IT',
 }
 
 function resolve(value: string): string {

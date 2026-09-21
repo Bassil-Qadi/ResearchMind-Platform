@@ -16,7 +16,7 @@ import {
   SelectTrigger, SelectValue,
 } from '@/components/ui/select'
 import { DEPARTMENTS } from '@/lib/departments'
-import { EMAIL_PLACEHOLDER, UNIVERSITY } from '@/lib/brand'
+import { EMAIL_PLACEHOLDER } from '@/lib/brand'
 
 const registerSchema = z.object({
   name:       z.string().min(2, 'Name must be at least 2 characters'),
@@ -37,8 +37,8 @@ type RegisterInput = z.infer<typeof registerSchema>
 
 // The brand panel stays the same before and after submitting.
 const HERO = {
-  heroHeading: `Join the ${UNIVERSITY.name} research community`,
-  heroBody:    'Create your account to discover projects, connect with researchers, and collaborate across faculties.',
+  heroHeading: 'Join your research community',
+  heroBody:    'Create your account to discover projects, connect with researchers, and collaborate across departments.',
   heroExtra: (
     <div className="space-y-3">
       {[
@@ -149,7 +149,7 @@ export default function RegisterPage() {
 
           {/* Email */}
           <div className="space-y-1.5">
-            <Label htmlFor="email">{UNIVERSITY.name} email</Label>
+            <Label htmlFor="email">Email</Label>
             <Input
               id="email"
               type="email"

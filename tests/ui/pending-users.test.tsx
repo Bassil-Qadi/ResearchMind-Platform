@@ -8,12 +8,12 @@ const LIST_URL = '/api/admin/users?status=pending'
 
 const applicants = [
   {
-    _id: 'u1', name: 'Lina Haddad', email: 'lina@yu.edu.jo', role: 'Researcher',
-    department: 'Faculty of Science', position: 'PhD Student', createdAt: '2026-09-10T00:00:00.000Z',
+    _id: 'u1', name: 'Lina Haddad', email: 'lina@university.edu', role: 'Researcher',
+    department: 'Natural Sciences', position: 'PhD Student', createdAt: '2026-09-10T00:00:00.000Z',
   },
   {
-    _id: 'u2', name: 'Omar Nasser', email: 'omar@yu.edu.jo', role: 'Student',
-    department: 'Faculty of Law', createdAt: '2026-09-11T00:00:00.000Z',
+    _id: 'u2', name: 'Omar Nasser', email: 'omar@university.edu', role: 'Student',
+    department: 'Law', createdAt: '2026-09-11T00:00:00.000Z',
   },
 ]
 
@@ -30,7 +30,7 @@ describe('PendingUsers', () => {
     renderWithClient(<PendingUsers />)
 
     expect(await screen.findByText('Lina Haddad')).toBeInTheDocument()
-    expect(screen.getByText('Faculty of Science · PhD Student')).toBeInTheDocument()
+    expect(screen.getByText('Natural Sciences · PhD Student')).toBeInTheDocument()
     expect(screen.getByText('Omar Nasser')).toBeInTheDocument()
     expect(screen.getByText('2')).toBeInTheDocument()
   })

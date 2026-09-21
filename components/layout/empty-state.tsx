@@ -12,12 +12,12 @@ interface EmptyStateProps {
 
 const accentStyles = {
   blue: {
-    ring: "from-green-500/20 to-emerald-500/20",
-    icon: "from-green-500 to-emerald-600 text-white",
+    ring: "from-blue-500/20 to-indigo-500/20",
+    icon: "from-blue-500 to-indigo-600 text-white",
   },
   violet: {
-    ring: "from-teal-500/20 to-emerald-500/20",
-    icon: "from-teal-500 to-emerald-600 text-white",
+    ring: "from-violet-500/20 to-purple-500/20",
+    icon: "from-violet-500 to-purple-600 text-white",
   },
   teal: {
     ring: "from-teal-500/20 to-emerald-500/20",

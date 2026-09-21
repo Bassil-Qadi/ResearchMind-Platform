@@ -68,8 +68,8 @@ const config: Config = {
         sm: "calc(var(--radius) - 4px)",
       },
       boxShadow: {
-        glow: "0 0 24px -4px oklch(0.52 0.13 152 / 25%)",
-        "glow-sm": "0 0 12px -2px oklch(0.52 0.13 152 / 20%)",
+        glow: "0 0 24px -4px oklch(0.55 0.16 250 / 25%)",
+        "glow-sm": "0 0 12px -2px oklch(0.55 0.16 250 / 20%)",
         elevated:
           "0 1px 2px oklch(0 0 0 / 4%), 0 4px 12px oklch(0 0 0 / 6%), 0 12px 24px oklch(0 0 0 / 4%)",
       },

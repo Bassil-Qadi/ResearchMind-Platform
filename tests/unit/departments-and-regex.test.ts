@@ -4,12 +4,12 @@ import { containsInsensitive, equalsInsensitive, escapeRegex } from '@/lib/regex
 
 describe('normaliseDepartment', () => {
   it('snaps a case variant to the canonical spelling', () => {
-    expect(normaliseDepartment('hijjawi faculty for engineering technology')).toBe('Hijjawi Faculty for Engineering Technology')
-    expect(normaliseDepartment('FACULTY OF MEDICINE')).toBe('Faculty of Medicine')
+    expect(normaliseDepartment('engineering')).toBe('Engineering')
+    expect(normaliseDepartment('SOCIAL SCIENCES')).toBe('Social Sciences')
   })
 
   it('tidies whitespace before matching', () => {
-    expect(normaliseDepartment('  Faculty   of  Medicine ')).toBe('Faculty of Medicine')
+    expect(normaliseDepartment('  Natural   Sciences ')).toBe('Natural Sciences')
   })
 
   it('keeps an unlisted department as written rather than rejecting it', () => {
@@ -27,8 +27,8 @@ describe('departmentOptions', () => {
   })
 
   it('does not list a case variant of a canonical department twice', () => {
-    const options = departmentOptions(['faculty of medicine', 'Faculty of Medicine'])
-    expect(options.filter((o) => o.toLowerCase() === 'faculty of medicine')).toEqual(['Faculty of Medicine'])
+    const options = departmentOptions(['natural sciences', 'Natural Sciences'])
+    expect(options.filter((o) => o.toLowerCase() === 'natural sciences')).toEqual(['Natural Sciences'])
   })
 
   it('merges case variants of an unlisted department too', () => {
@@ -60,8 +60,8 @@ describe('regex helpers', () => {
   })
 
   it('matches a whole label regardless of case', () => {
-    expect(equalsInsensitive('Hijjawi Faculty for Engineering Technology').test('hijjawi faculty for engineering technology')).toBe(true)
+    expect(equalsInsensitive('School of Engineering').test('school of engineering')).toBe(true)
     // Whole value only: a department is not "found" by a prefix of its name.
-    expect(equalsInsensitive('Faculty').test('Hijjawi Faculty for Engineering Technology')).toBe(false)
+    expect(equalsInsensitive('School').test('School of Engineering')).toBe(false)
   })
 })

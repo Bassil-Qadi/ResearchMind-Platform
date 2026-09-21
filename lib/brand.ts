@@ -1,32 +1,19 @@
 /**
- * Yarmouk University — the one place the institution and the platform are
- * named. Copy that mentions either should read from here, so a rename is one
- * edit rather than a hunt through thirty files.
+ * ResearchMind — the one place the platform is named. Copy that mentions it
+ * should read from here, so a rename is one edit rather than a hunt through
+ * thirty files.
+ *
+ * The platform serves any university or research organisation, so nothing here
+ * names an institution; pages say "your institution" instead.
  */
-export const UNIVERSITY = {
-  name:        'Yarmouk University',
-  /** Rendered alongside the English name on the public pages. */
-  nameArabic:  'جامعة اليرموك',
-  short:       'Yarmouk',
-  initials:    'YU',
-  city:        'Irbid',
-  country:     'Jordan',
-  founded:     1976,
-  website:     'https://www.yu.edu.jo',
-  /** Staff and students sign in with an address at this domain. */
-  emailDomain: 'yu.edu.jo',
-} as const
-
 export const PLATFORM = {
   /** Full name, for page titles, emails and footers. */
-  name:    'Yarmouk University Research Platform',
+  name:    'ResearchMind',
   /** The second line under the logo, where space is tight. */
-  short:   'Research Hub',
-  tagline: 'Research collaboration across Yarmouk University',
+  short:   'Research Collaboration',
+  tagline: 'Research collaboration for universities and research teams',
+  website: 'https://researchmind.live',
 } as const
 
-/** e.g. "Irbid, Jordan" */
-export const UNIVERSITY_LOCATION = `${UNIVERSITY.city}, ${UNIVERSITY.country}`
-
-/** A sample address in the university's own domain, for input placeholders. */
-export const EMAIL_PLACEHOLDER = `you@${UNIVERSITY.emailDomain}`
+/** A sample address for input placeholders. */
+export const EMAIL_PLACEHOLDER = 'you@university.edu'

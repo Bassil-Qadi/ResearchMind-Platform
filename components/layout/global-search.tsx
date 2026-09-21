@@ -128,8 +128,8 @@ export function GlobalSearch() {
               {hit.kind === 'person' ? (
                 <UserAvatar name={hit.title} src={hit.avatarUrl} className="h-7 w-7 shrink-0" fallbackClassName="text-[10px]" />
               ) : (
-                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10">
-                  <FolderKanban className="h-3.5 w-3.5 text-emerald-600 dark:text-emerald-400" />
+                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-blue-500/10">
+                  <FolderKanban className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
                 </span>
               )}
               <div className="min-w-0">

@@ -33,11 +33,11 @@ const statusStyles: Record<
 > = {
   active: {
     label: "Active",
-    className: cn(PROJECT_STATUS_STYLES.active, "border-green-600/20"),
+    className: cn(PROJECT_STATUS_STYLES.active, "border-blue-500/20"),
   },
   recruiting: {
     label: "Recruiting",
-    className: cn(PROJECT_STATUS_STYLES.seeking, "border-teal-500/20"),
+    className: cn(PROJECT_STATUS_STYLES.seeking, "border-emerald-500/20"),
   },
   completed: {
     label: "Completed",
@@ -54,13 +54,11 @@ const statusStyles: Record<
   },
 };
 
-// Cover art, picked deterministically per project. All four stay inside
-// Yarmouk's green so a wall of cards reads as one palette.
 const defaultGradients = [
-  "from-green-600 via-emerald-600 to-teal-700",
-  "from-emerald-500 via-teal-600 to-green-800",
-  "from-teal-600 via-emerald-600 to-lime-700",
-  "from-lime-600 via-green-600 to-emerald-800",
+  "from-blue-600 via-indigo-600 to-violet-700",
+  "from-teal-600 via-cyan-600 to-blue-700",
+  "from-violet-600 via-purple-600 to-fuchsia-700",
+  "from-amber-500 via-orange-500 to-rose-600",
 ];
 
 export function ProjectCard({
@@ -86,7 +84,7 @@ export function ProjectCard({
     <Link href={`/projects/${id}`} className="group block">
       <Card
         className={cn(
-          "card-interactive h-full overflow-hidden border-border/60 shadow-sm hover:border-green-600/30 hover:shadow-glow-sm",
+          "card-interactive h-full overflow-hidden border-border/60 shadow-sm hover:border-blue-500/30 hover:shadow-glow-sm",
           className
         )}
       >
@@ -107,7 +105,7 @@ export function ProjectCard({
           </div>
         </div>
         <CardHeader className="pb-2 pt-4">
-          <CardTitle className="line-clamp-1 text-base transition-colors group-hover:text-green-700 dark:group-hover:text-green-400">
+          <CardTitle className="line-clamp-1 text-base transition-colors group-hover:text-blue-600 dark:group-hover:text-blue-400">
             {title}
           </CardTitle>
           {department && (

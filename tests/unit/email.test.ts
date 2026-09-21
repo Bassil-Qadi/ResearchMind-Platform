@@ -85,7 +85,7 @@ describe('sendEmail', () => {
 
     // Returns before any request is made, so no network is involved.
     await expect(
-      sendEmail({ to: ['sara.haddad@yu-demo.test', 'x@site.example'], subject: 's', html: '<p>h</p>', text: 't' })
+      sendEmail({ to: ['sara.haddad@demo.test', 'x@site.example'], subject: 's', html: '<p>h</p>', text: 't' })
     ).resolves.toMatchObject({ sent: false, reason: 'No deliverable recipients' })
 
     delete process.env.RESEND_API_KEY
@@ -94,12 +94,12 @@ describe('sendEmail', () => {
 
 describe('isDeliverable', () => {
   it('rejects the reserved top-level domains and accepts real ones', () => {
-    expect(isDeliverable('a@yu-demo.test')).toBe(false)
+    expect(isDeliverable('a@demo.test')).toBe(false)
     expect(isDeliverable('a@foo.EXAMPLE')).toBe(false)
     expect(isDeliverable('a@x.invalid')).toBe(false)
     expect(isDeliverable('a@dev.localhost ')).toBe(false)
 
-    expect(isDeliverable('lina@yu.edu.jo')).toBe(true)
+    expect(isDeliverable('lina@university.edu')).toBe(true)
     expect(isDeliverable('someone@gmail.com')).toBe(true)
     // Only the final label counts: "test" elsewhere in the address is fine.
     expect(isDeliverable('test@testing.com')).toBe(true)

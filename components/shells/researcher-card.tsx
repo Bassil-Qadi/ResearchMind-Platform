@@ -26,9 +26,9 @@ export interface ResearcherCardProps {
 }
 
 const avatarGradients = [
-  "from-green-600 to-emerald-700",
   "from-teal-500 to-emerald-600",
-  "from-lime-600 to-green-700",
+  "from-violet-500 to-purple-600",
+  "from-blue-500 to-indigo-600",
   "from-rose-500 to-pink-600",
   "from-amber-500 to-orange-600",
 ];
