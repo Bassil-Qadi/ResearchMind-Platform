@@ -1,0 +1,13 @@
+# Netlify build settings for ResearchMind.
+#
+# The Next.js plugin handles the server-rendered routes, the middleware and the
+# API routes; without it only static pages would be served.
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[build.environment]
+  NODE_VERSION = "22"

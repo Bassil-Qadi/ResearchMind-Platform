@@ -120,6 +120,25 @@ than later ones.
 
 GitHub Actions runs lint, typecheck, and build on push/PR to `main`. See `.github/workflows/ci.yml`.
 
+## Deployment (Netlify)
+
+`netlify.toml` holds the build settings; everything else is set once in the
+Netlify UI.
+
+1. Create a site from the `ResearchMind-Platform` repository, branch `main`.
+   The build command and publish directory come from `netlify.toml`.
+2. Add the environment variables from `.env.example` under Site configuration →
+   Environment variables. Notes:
+   - `MONGODB_URI` must point at ResearchMind's own database, not another
+     deployment's.
+   - `AUTH_URL` and `NEXTAUTH_URL` must be the full `https://` site address, or
+     sign-in redirects break.
+   - `EMAIL_FROM` must use a domain verified in Resend.
+   - Generate a fresh `AUTH_SECRET`/`NEXTAUTH_SECRET` per site:
+     `node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"`.
+3. Add the domain under Domain management. A domain can only belong to one
+   Netlify site, so remove it from the old site first.
+
 ## Phase 2 (next)
 
 - Project CRUD and MongoDB models
